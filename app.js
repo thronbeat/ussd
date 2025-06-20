@@ -5,6 +5,12 @@ const app = express();
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
 
+
+
+app.get('/ussd', (req, res) => {
+response = `CON Welcome to Health BMI App`;
+});
+
 app.post('/ussd', (req, res) => {
     const { sessionId, phoneNumber, text } = req.body;
 
@@ -92,7 +98,7 @@ Would you like health tips?
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT =  5000;
 app.listen(PORT, () => {
     console.log(`USSD app running at http://localhost:${PORT}/ussd`);
 });
