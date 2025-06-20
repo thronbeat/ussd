@@ -1,7 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
-// Middleware to parse incoming form data
+// Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/ussd', (req, res) => {
@@ -10,7 +11,7 @@ app.post('/ussd', (req, res) => {
     let response = '';
     const inputs = text.split('*');
 
-    // Debug logs (optional)
+    // Debugging log
     console.log(`Session: ${sessionId}, Phone: ${phoneNumber}, Text: ${text}, Inputs:`, inputs);
 
     if (text === '') {
@@ -47,7 +48,7 @@ Would you like health tips?
         }
     } else if (inputs.length === 4) {
         // Step 5: Provide health tips
-        const lang = inputs[0]; // 1 = English, 2 = Kinyarwanda
+        const lang = inputs[0];
         const weight = parseFloat(inputs[1]);
         const height = parseFloat(inputs[2]);
         const wantTips = inputs[3];
@@ -83,7 +84,6 @@ Would you like health tips?
             response = 'END Invalid option for health tips.';
         }
     } else {
-        // Handle too many or invalid inputs
         response = 'END Invalid input. Please restart and follow the instructions.';
     }
 
@@ -92,7 +92,7 @@ Would you like health tips?
 });
 
 // Start server
-const PORT = 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`USSD app running at http://localhost:${PORT}/ussd`);
 });
